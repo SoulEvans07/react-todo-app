@@ -1,0 +1,77 @@
+.app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.content {
+  margin: 0 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.task-list {
+  flex-grow: 0;
+  margin-right: 10px;
+}
+
+.task-details {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+}
+
+@media only screen and (max-width: 859px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .task-list {
+    order: 1;
+  }
+
+  .task-details {
+    order: 0;
+  }
+}
+
+.task {
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+  width: 400px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+}
+
+.task > .add {
+  background: #eee;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.task > .text {
+  padding: 0 10px;
+  flex-grow: 1;
+  line-height: 30px;
+  background: #eee;
+  color: #2c3e50;
+  font-size: 16px;
+  border: none;
+}
