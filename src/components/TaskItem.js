@@ -1,20 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styles from './TaskItem.module.css'
 
-function TaskItem(props) {
-  const task = props.task;
-  //const index = props.index;
-  const check = task.done ? <i className='fa fa-check'/> : null;
-
-  return (
-    <div className={styles.task}>
-      <div className={styles.checkbox}>
-        { check }
+class TaskItem extends Component {
+  render() {
+    return (
+      <div className={styles.task}>
+        <div className={styles.checkbox}>
+          { this.props.task.done ? <i className='fa fa-check'/> : null }
+        </div>
+        <div className={styles.text}>{ this.props.task.text }</div>
+        <i className={`${styles.remove} fa fa-times`} title='Delete'/>
       </div>
-      <div className={styles.text}>{ task.text }</div>
-      <i className={`${styles.remove} fa fa-times`} title='Delete'/>
-    </div>
-  )
+    )
+  }
 }
-
 export default TaskItem
