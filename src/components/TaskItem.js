@@ -3,8 +3,12 @@ import styles from './TaskItem.module.css'
 
 class TaskItem extends Component {
   render() {
+    const taskStyleClass = [ styles.task ];
+    if(this.props.task.done)
+      taskStyleClass.push(styles.done)
+
     return (
-      <div className={styles.task}>
+      <div className={taskStyleClass.join(' ')}>
         <div className={styles.checkbox} onClick={this.props.onClick}>
           { this.props.task.done ? <i className='fa fa-check'/> : null }
         </div>
