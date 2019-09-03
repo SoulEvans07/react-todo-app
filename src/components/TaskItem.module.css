@@ -38,10 +38,10 @@
 }
 
 .task.done {
-    color: #42b983;
+    color: #5dbdd8;
 }
 
 .task.selected > .text, .task.selected > .checkbox, .task.selected > .remove {
-    background: #42b983;
+    background: #5dbdd8;
     color: white;
 }
