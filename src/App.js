@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TaskItem from './components/TaskItem'
 import styles from './App.module.css'
-import { addTask, removeTask, updateTaskState, fetchTaskList } from './store/actions'
+import { addTask, removeTask, updateTaskState, fetchTaskList, setError } from './store/actions'
 
 class App extends Component {
   constructor(props) {
@@ -21,8 +21,10 @@ class App extends Component {
   }
 
   addTask = (event) => {
-    this.props.store.dispatch(addTask({ text: this.state.temp_task }))
-    this.setState({ temp_task: "" })
+    if(this.state.temp_task){
+      this.props.store.dispatch(addTask({ text: this.state.temp_task }))
+      this.setState({ temp_task: "" })
+    }
   }
 
   addTaskByEnter = (event) => {
@@ -39,6 +41,10 @@ class App extends Component {
     this.props.store.dispatch(removeTask({ _id: task._id }))
   }
 
+  removeError = () => {
+    this.props.store.dispatch(setError({ error: null }))
+  }
+
   render() {
     return (
       <div className={styles.app}>
@@ -47,6 +53,12 @@ class App extends Component {
         </div>
         <div className={styles.content}>
           <div className={styles.taskList}>
+            { this.props.store.getState().error &&
+                <div className={styles.error}>
+                  <div className={styles.text}>[error] {this.props.store.getState().error}</div>
+                  <i className={`${styles.close} fa fa-times`} onClick={this.removeError} />
+                </div>
+            }
             { this.props.store.getState().task_list.map((task, index) => 
               <TaskItem task={task} index={index} key={task._id} 
                 onClick={() => this.changeTaskState(task)}

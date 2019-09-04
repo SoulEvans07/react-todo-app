@@ -10,7 +10,7 @@ export function addTask(payload) {
     .then(res => res.json())
     .then(res => {
       if(res.error !== undefined)
-        console.error(res.error)
+        dispatch(setError({ error: res.error }))
       else
         dispatch({ type: types.ADD_TASK, payload: res })
     })
@@ -24,7 +24,7 @@ export function removeTask(payload) {
     })
     .then(res => {
       if(res.error !== undefined)
-        console.error(res.error)
+        dispatch(setError({ error: res.error }))
       else
         dispatch({ type: types.REMOVE_TASK, payload })
     })
@@ -41,7 +41,7 @@ export function updateTaskState(payload) {
     .then(res => res.json())
     .then(res => {
       if(res.error !== undefined)
-        console.error(res.error)
+        dispatch(setError({ error: res.error }))
       else
         dispatch({ type: types.UPDATE_TASK_STATE, payload: { _id: res._id } })
     })
@@ -61,4 +61,8 @@ export function fetchTaskList() {
       dispatch(setTaskList({ task_list: res }))
     })
   }
+}
+
+export function setError(payload) {
+  return { type: types.SET_ERROR, payload }
 }

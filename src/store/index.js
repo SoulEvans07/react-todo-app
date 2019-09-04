@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import types from './action_types'
 
 const initialState = {
+  error: null,
   task_list: []
 }
 
@@ -29,6 +30,10 @@ function setTaskList(state, payload) {
   return { ...state, task_list: payload.task_list }
 }
 
+function setError(state, payload) {
+  return { ...state, error: payload.error }
+}
+
 function rootReducer(state, action) {
   switch (action.type) {
     case types.ADD_TASK:
@@ -39,6 +44,8 @@ function rootReducer(state, action) {
       return updateTaskState(state, action.payload)
     case types.SET_TASK_LIST:
       return setTaskList(state, action.payload)
+    case types.SET_ERROR:
+      return setError(state, action.payload)
     default:
       return state
   }

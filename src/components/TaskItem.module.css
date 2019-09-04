@@ -20,7 +20,7 @@
 
 .remove {
     background: #eee;
-    color: #da2b2b;
+    color: rgb(255, 100, 100);
     cursor: pointer;
     width: 30px;
     height: 30px;

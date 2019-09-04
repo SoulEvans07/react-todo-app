@@ -55,6 +55,37 @@
   margin: 5px 0;
 }
 
+.error {
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+  max-width: 400px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0; 
+}
+
+.error > .text {
+  flex-grow: 1;
+  padding: 0 10px;
+  background: rgb(255, 200, 200);
+  color: rgb(255, 100, 100);
+  line-height: 30px;
+  font-size: 16px;
+}
+
+.error > .close {
+  background: rgb(255, 200, 200);
+  color: rgb(255, 100, 100);
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  text-align: center;
+}
+
 .task > .add {
   background: #eee;
   cursor: pointer;
