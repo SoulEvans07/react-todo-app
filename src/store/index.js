@@ -1,14 +1,9 @@
-import { createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
+import thunk from 'redux-thunk'
 import types from './action_types'
 
 const initialState = {
-  task_list: [
-    { done: true, text: 'Learn Javascript' },
-    { done: true, text: 'Learn ES6' },
-    { done: false, text: 'Learn React' },
-    { done: false, text: 'Learn Redux' },
-    { done: false, text: 'Build something awesome!' }
-  ]
+  task_list: []
 }
 
 function addTask (state, payload) {
@@ -18,15 +13,15 @@ function addTask (state, payload) {
 }
 
 function updateTaskState (state, payload) {
-  const new_list = state.task_list.map((task, index) => {
-    task.done = (index === payload.index ? !task.done : task.done)
+  const new_list = state.task_list.map(task => {
+    task.done = (task._id === payload._id ? !task.done : task.done)
     return task
   })
   return { ...state, task_list: new_list }
 }
 
 function removeTask (state, payload) {
-  const new_list = state.task_list.filter((task, index) => index !== payload.index);
+  const new_list = state.task_list.filter(task => task._id !== payload._id);
   return { ...state, task_list: new_list }
 }
 
@@ -34,8 +29,7 @@ function setTaskList(state, payload) {
   return { ...state, task_list: payload.task_list }
 }
 
-
-const store = createStore((state = initialState, action) => {
+function rootReducer(state, action) {
   switch (action.type) {
     case types.ADD_TASK:
       return addTask(state, action.payload)
@@ -48,6 +42,8 @@ const store = createStore((state = initialState, action) => {
     default:
       return state
   }
-})
+}
+
+const store = createStore(rootReducer, initialState, applyMiddleware(thunk))
 
 export default store

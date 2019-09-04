@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import TaskItem from './components/TaskItem'
 import styles from './App.module.css'
-import store from './store'
 import { addTask, removeTask, updateTaskState, fetchTaskList } from './store/actions'
 
 class App extends Component {
-  constructor() {
-    super()
-    store.subscribe(() => this.forceUpdate())
-
-    fetch('http://localhost:5000/api/tasks', { 
-      method: 'GET',
-    }).then(res => res.json())
-      .then(res => console.log(res));
+  constructor(props) {
+    super(props)
+    this.props.store.subscribe(() => this.forceUpdate())
+    
+    this.props.store.dispatch(fetchTaskList())
   }
 
   state = {
@@ -25,7 +21,7 @@ class App extends Component {
   }
 
   addTask = (event) => {
-    store.dispatch(addTask({ done: false, text: this.state.temp_task }))
+    this.props.store.dispatch(addTask({ text: this.state.temp_task }))
     this.setState({ temp_task: "" })
   }
 
@@ -35,14 +31,14 @@ class App extends Component {
     }
   }
 
-  changeTaskState = (index) => {
-    store.dispatch(updateTaskState({ index }))
+  changeTaskState = (task) => {
+    this.props.store.dispatch(updateTaskState({ task }))
   }
 
-  removeTask = (index) => {
-    store.dispatch(removeTask({ index }))
+  removeTask = (task) => {
+    this.props.store.dispatch(removeTask({ _id: task._id }))
   }
-  
+
   render() {
     return (
       <div className={styles.app}>
@@ -52,13 +48,13 @@ class App extends Component {
         <div className={styles.content}>
           <div className={styles.taskList}>
             { this.props.store.getState().task_list.map((task, index) => 
-              <TaskItem task={task} index={index} key={index} 
-                onClick={() => this.changeTaskState(index)}
-                onRemove={() => this.removeTask(index)}/>)}
+              <TaskItem task={task} index={index} key={task._id} 
+                onClick={() => this.changeTaskState(task)}
+                onRemove={() => this.removeTask(task)}/>)}
 
             <div className={styles.task}>
               <i className={`${styles.add} fa fa-plus`} onClick={this.addTask} />
-              <input className={styles.text} name="temp_task" type="text" 
+              <input className={styles.text} name="temp_task" type="text" autoComplete="off"
                 value={this.state.temp_task} onChange={this.updateTempTask} onKeyUp={this.addTaskByEnter} />
             </div>
           </div>
