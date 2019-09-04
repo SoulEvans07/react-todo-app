@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import action_types from './action_types'
+import types from './action_types'
 
 const initialState = {
   task_list: [
@@ -11,35 +11,43 @@ const initialState = {
   ]
 }
 
-const reducers = {
-  [action_types.ADD_TASK]: (state, payload) => {
-    const new_list = [...state.task_list]
-    new_list.push(payload)
-    return { ...state, task_list: new_list }
-  },
-  [action_types.UPDATE_TASK_STATE]: (state, payload) => {
-    const new_list = state.task_list.map((task, index) => {
-      task.done = (index === payload.index ? !task.done : task.done)
-      return task
-    })
-    return { ...state, task_list: new_list }
-  },
-  [action_types.REMOVE_TASK]: (state, payload) => {
-    const new_list = state.task_list.filter((task, index) => index !== payload.index);
-    return { ...state, task_list: new_list }
-  }
+function addTask (state, payload) {
+  const new_list = [...state.task_list]
+  new_list.push(payload)
+  return { ...state, task_list: new_list }
 }
+
+function updateTaskState (state, payload) {
+  const new_list = state.task_list.map((task, index) => {
+    task.done = (index === payload.index ? !task.done : task.done)
+    return task
+  })
+  return { ...state, task_list: new_list }
+}
+
+function removeTask (state, payload) {
+  const new_list = state.task_list.filter((task, index) => index !== payload.index);
+  return { ...state, task_list: new_list }
+}
+
+function setTaskList(state, payload) {
+  return { ...state, task_list: payload.task_list }
+}
+
 
 const store = createStore((state = initialState, action) => {
-  if(reducers[action.type] !== undefined) {
-    return reducers[action.type](state, action.payload);
+  switch (action.type) {
+    case types.ADD_TASK:
+      return addTask(state, action.payload)
+    case types.REMOVE_TASK:
+      return removeTask(state, action.payload)
+    case types.UPDATE_TASK_STATE:
+      return updateTaskState(state, action.payload)
+    case types.SET_TASK_LIST:
+      return setTaskList(state, action.payload)
+    default:
+      return state
   }
-  
-  return state;
 })
-
-store.commit = function(type, payload) {
-  return store.dispatch({ type, payload })
-}
 
 export default store

@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import TaskItem from './components/TaskItem'
 import styles from './App.module.css'
 import store from './store'
-import action_types from './store/action_types'
+import { addTask, removeTask, updateTaskState, fetchTaskList } from './store/actions'
 
 class App extends Component {
   constructor() {
     super()
     store.subscribe(() => this.forceUpdate())
+
+    fetch('http://localhost:5000/api/tasks', { 
+      method: 'GET',
+    }).then(res => res.json())
+      .then(res => console.log(res));
   }
 
   state = {
@@ -20,7 +25,7 @@ class App extends Component {
   }
 
   addTask = (event) => {
-    store.commit(action_types.ADD_TASK, { done: false, text: this.state.temp_task })
+    store.dispatch(addTask({ done: false, text: this.state.temp_task }))
     this.setState({ temp_task: "" })
   }
 
@@ -31,13 +36,13 @@ class App extends Component {
   }
 
   changeTaskState = (index) => {
-    store.commit(action_types.UPDATE_TASK_STATE, { index })
+    store.dispatch(updateTaskState({ index }))
   }
 
   removeTask = (index) => {
-    store.commit(action_types.REMOVE_TASK, { index })
+    store.dispatch(removeTask({ index }))
   }
-
+  
   render() {
     return (
       <div className={styles.app}>
@@ -49,7 +54,7 @@ class App extends Component {
             { this.props.store.getState().task_list.map((task, index) => 
               <TaskItem task={task} index={index} key={index} 
                 onClick={() => this.changeTaskState(index)}
-                onRemove={() => this.removeTask(index)}/>) }
+                onRemove={() => this.removeTask(index)}/>)}
 
             <div className={styles.task}>
               <i className={`${styles.add} fa fa-plus`} onClick={this.addTask} />
