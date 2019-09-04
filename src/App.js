@@ -46,13 +46,14 @@ class App extends Component {
   }
 
   render() {
+    console.log(styles)
     return (
       <div className={styles.app}>
         <div className={styles.header}>
           <h1>Todos</h1>
         </div>
         <div className={styles.content}>
-          <div className={styles.taskList}>
+          <div className={styles['task-list']}>
             { this.props.store.getState().error &&
                 <div className={styles.error}>
                   <div className={styles.text}>[error] {this.props.store.getState().error}</div>
