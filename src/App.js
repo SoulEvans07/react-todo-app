@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TaskItem from './components/TaskItem'
+import TaskItemLoad from './components/TaskItemLoad'
 import styles from './App.module.css'
 import { addTask, removeTask, updateTaskState, fetchTaskList, setError } from './store/actions'
 
@@ -46,7 +47,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(styles)
     return (
       <div className={styles.app}>
         <div className={styles.header}>
@@ -60,11 +60,16 @@ class App extends Component {
                   <i className={`${styles.close} fa fa-times`} onClick={this.removeError} />
                 </div>
             }
+            { this.props.store.getState().task_list.length === 0 &&
+              [0,1,2,3,4].map((el) => 
+                <TaskItemLoad key={el} delay={-0.4*el} />
+              )
+            }
             { this.props.store.getState().task_list.map((task, index) => 
               <TaskItem task={task} index={index} key={task._id} 
                 onClick={() => this.changeTaskState(task)}
-                onRemove={() => this.removeTask(task)}/>)}
-
+                onRemove={() => this.removeTask(task)}/>)
+            }
             <div className={styles.task}>
               <i className={`${styles.add} fa fa-plus`} onClick={this.addTask} />
               <input className={styles.text} name="temp_task" type="text" autoComplete="off"
