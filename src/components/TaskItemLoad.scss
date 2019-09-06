@@ -1,6 +1,8 @@
+@import '../constants/constants.scss';
+
 .taskLoadItem {
     user-select: none;
-    max-width: 400px;
+    max-width: $task-length;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -31,7 +33,7 @@
     
     .text {
         padding: 0 10px;
-        max-width: 400px;
+        max-width: $task-length;
         flex-grow: 1;
         background: #eee;
         line-height: 30px;

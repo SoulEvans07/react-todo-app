@@ -60,12 +60,13 @@ class App extends Component {
                   <i className="close fa fa-times" onClick={this.removeError} />
                 </div>
             }
-            { this.props.store.getState().task_list.length === 0 &&
+            { this.props.store.getState().task_list === null &&
               [0,1,2,3,4].map((el) => 
                 <TaskItemLoad key={el} delay={-0.4*el} />
               )
             }
-            { this.props.store.getState().task_list.map((task, index) => 
+            { this.props.store.getState().task_list !== null &&
+              this.props.store.getState().task_list.map((task, index) => 
               <TaskItem task={task} index={index} key={task._id} 
                 onClick={() => this.changeTaskState(task)}
                 onRemove={() => this.removeTask(task)}/>)

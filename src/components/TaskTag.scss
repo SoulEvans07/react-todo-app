@@ -1,0 +1,18 @@
+.taskTag {
+    height: 20px;
+    max-width: 70px;
+    margin: 5px 5px 5px 0;
+    padding: 0 8px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.75em;
+
+    .name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

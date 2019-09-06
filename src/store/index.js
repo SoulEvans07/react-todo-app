@@ -4,7 +4,7 @@ import types from './action_types'
 
 const initialState = {
   error: null,
-  task_list: []
+  task_list: null
 }
 
 function addTask (state, payload) {
