@@ -1,5 +1,9 @@
 import types from './action_types'
 
+export function selectTask(payload) {
+  return { type: types.SELECT_TASK, payload }
+}
+
 export function addTask(payload) {
   return dispatch => {
     fetch('http://localhost:5000/api/tasks/new', {

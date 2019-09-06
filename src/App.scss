@@ -1,7 +1,5 @@
-@import './constants/constants.scss';
-
 .app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #2c3e50;
   display: flex;
   flex-direction: column;
@@ -15,7 +13,7 @@
 }
 
 .content {
-  margin: 0 10px;
+  margin: 0 10px 10px;
   flex-grow: 1;
   display: flex;
   flex-direction: row;
@@ -23,11 +21,13 @@
 
 .taskList {
   flex-grow: 1;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
-.taskDetails {
+.selectedTask {
   flex-grow: 1;
+  min-width: 50%;
+  margin-left: 5px;
   height: 100%;
   display: flex;
 }
@@ -39,10 +39,12 @@
 
   .taskList {
     order: 1;
+    margin-right: 0;
   }
 
-  .taskDetails {
+  .selectedTask {
     order: 0;
+    margin-left: 0;
   }
 }
 
@@ -50,7 +52,7 @@
   display: flex;
   flex-direction: row;
   user-select: none;
-  width: $task-length;
+  width: 100%;
   height: 30px;
   display: flex;
   flex-direction: row;
@@ -82,11 +84,11 @@
   display: flex;
   flex-direction: row;
   user-select: none;
-  max-width: 400px;
+  max-width: 100%;
   height: 30px;
   display: flex;
   flex-direction: row;
-  margin: 5px 0; 
+  margin: 5px 0;
 
   .text {
     flex-grow: 1;

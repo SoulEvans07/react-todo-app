@@ -4,7 +4,8 @@ import types from './action_types'
 
 const initialState = {
   error: null,
-  task_list: null
+  task_list: null,
+  selected_task: null
 }
 
 function addTask (state, payload) {
@@ -34,6 +35,10 @@ function setError(state, payload) {
   return { ...state, error: payload.error }
 }
 
+function selectTask(state, payload) {
+  return { ...state, selected_task: payload._id }
+}
+
 function rootReducer(state, action) {
   switch (action.type) {
     case types.ADD_TASK:
@@ -46,6 +51,8 @@ function rootReducer(state, action) {
       return setTaskList(state, action.payload)
     case types.SET_ERROR:
       return setError(state, action.payload)
+    case types.SELECT_TASK:
+      return selectTask(state, action.payload)
     default:
       return state
   }

@@ -1,61 +1,61 @@
-@import '../constants/constants.scss';
+@import '../constants/colors.scss';
 
 .taskItem {
-    user-select: none;
-    max-width: $task-length;
+  user-select: none;
+  max-width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+
+  .checkbox {
+    background: #eee;
+    cursor: pointer;
+    min-width: 30px;
     height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+    margin-right: 5px;
+  }
+
+  .remove {
+    background: #eee;
+    color: rgb(255, 100, 100);
+    cursor: pointer;
+    min-width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+    margin-left: 5px;
+  }
+
+  .text {
+    padding: 0 10px;
+    max-width: 100%;
+    flex-grow: 1;
+    background: #eee;
+    line-height: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tagList {
+    background: #eee;
     display: flex;
     flex-direction: row;
-    margin: 5px 0;
+  }
 
-    .checkbox {
-        background: #eee;
-        cursor: pointer;
-        min-width: 30px;
-        height: 30px;
-        line-height: 30px;
-        font-size: 12px;
-        text-align: center;
-        margin-right: 5px;
-    }
-    
-    .remove {
-        background: #eee;
-        color: rgb(255, 100, 100);
-        cursor: pointer;
-        min-width: 30px;
-        height: 30px;
-        line-height: 30px;
-        font-size: 12px;
-        text-align: center;
-        margin-left: 5px;
-    }
-    
-    .text {
-        padding: 0 10px;
-        max-width: $task-length;
-        flex-grow: 1;
-        background: #eee;
-        line-height: 30px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  &.done {
+    color: $main-color;
+  }
 
-    .tagList {
-        background: #eee;
-        display: flex;
-        flex-direction: row;
-    }
-    
-    &.done {
-        color: #5dbdd8;
-    }
-    
-    &.selected > .text, 
-    &.selected > .checkbox, 
-    &.selected > .remove {
-        background: #5dbdd8;
-        color: white;
-    }    
+  &.selected > .text,
+  &.selected > .checkbox,
+  &.selected > .remove {
+    background:$main-color;
+    color: white;
+  }
 }
