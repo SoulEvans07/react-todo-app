@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TaskItem from './components/TaskItem'
 import TaskItemLoad from './components/TaskItemLoad'
-import styles from './App.module.css'
+import './App.scss'
 import { addTask, removeTask, updateTaskState, fetchTaskList, setError } from './store/actions'
 
 class App extends Component {
@@ -48,16 +48,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className={styles.app}>
-        <div className={styles.header}>
+      <div className="app">
+        <div className="header">
           <h1>Todos</h1>
         </div>
-        <div className={styles.content}>
-          <div className={styles['task-list']}>
+        <div className="content">
+          <div className="taskList">
             { this.props.store.getState().error &&
-                <div className={styles.error}>
-                  <div className={styles.text}>[error] {this.props.store.getState().error}</div>
-                  <i className={`${styles.close} fa fa-times`} onClick={this.removeError} />
+                <div className="error">
+                  <div className="text">[error] {this.props.store.getState().error}</div>
+                  <i className="close fa fa-times" onClick={this.removeError} />
                 </div>
             }
             { this.props.store.getState().task_list.length === 0 &&
@@ -70,9 +70,9 @@ class App extends Component {
                 onClick={() => this.changeTaskState(task)}
                 onRemove={() => this.removeTask(task)}/>)
             }
-            <div className={styles.task}>
-              <i className={`${styles.add} fa fa-plus`} onClick={this.addTask} />
-              <input className={styles.text} name="temp_task" type="text" autoComplete="off"
+            <div className="newTask">
+              <i className="add fa fa-plus" onClick={this.addTask} />
+              <input className="text" name="temp_task" type="text" autoComplete="off"
                 value={this.state.temp_task} onChange={this.updateTempTask} onKeyUp={this.addTaskByEnter} />
             </div>
           </div>

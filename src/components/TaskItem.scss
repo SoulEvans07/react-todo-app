@@ -1,0 +1,53 @@
+.taskItem {
+    user-select: none;
+    max-width: 400px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+
+    .checkbox {
+        background: #eee;
+        cursor: pointer;
+        min-width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        text-align: center;
+        margin-right: 5px;
+    }
+    
+    .remove {
+        background: #eee;
+        color: rgb(255, 100, 100);
+        cursor: pointer;
+        min-width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        text-align: center;
+        margin-left: 5px;
+    }
+    
+    .text {
+        padding: 0 10px;
+        max-width: 400px;
+        flex-grow: 1;
+        background: #eee;
+        line-height: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    &.done {
+        color: #5dbdd8;
+    }
+    
+    &.selected > .text, 
+    &.selected > .checkbox, 
+    &.selected > .remove {
+        background: #5dbdd8;
+        color: white;
+    }    
+}

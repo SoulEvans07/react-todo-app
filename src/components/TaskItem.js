@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import styles from './TaskItem.module.css'
+import './TaskItem.scss'
 
 class TaskItem extends Component {
   render() {
-    const taskStyleClass = [ styles.task ];
+    const taskStyleClass = [ "taskItem" ];
     if(this.props.task.done)
-      taskStyleClass.push(styles.done)
+      taskStyleClass.push("done")
 
     return (
       <div className={taskStyleClass.join(' ')}>
-        <div className={styles.checkbox} onClick={this.props.onClick}>
+        <div className="checkbox" onClick={this.props.onClick}>
           { this.props.task.done ? <i className='fa fa-check'/> : null }
         </div>
-        <div className={styles.text} title={this.props.task.text}>{ this.props.task.text }</div>
-        <i className={`${styles.remove} fa fa-times`} title='Delete' onClick={this.props.onRemove}/>
+        <div className="text" title={this.props.task.text}>{ this.props.task.text }</div>
+        <i className="remove fa fa-times" title='Delete' onClick={this.props.onRemove}/>
       </div>
     )
   }

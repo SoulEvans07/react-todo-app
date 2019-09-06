@@ -19,12 +19,12 @@
   flex-direction: row;
 }
 
-.task-list {
+.taskList {
   flex-grow: 0;
   margin-right: 10px;
 }
 
-.task-details {
+.taskDetails {
   flex-grow: 1;
   height: 100%;
   display: flex;
@@ -35,16 +35,16 @@
     flex-direction: column;
   }
 
-  .task-list {
+  .taskList {
     order: 1;
   }
 
-  .task-details {
+  .taskDetails {
     order: 0;
   }
 }
 
-.task {
+.newTask {
   display: flex;
   flex-direction: row;
   user-select: none;
@@ -53,6 +53,27 @@
   display: flex;
   flex-direction: row;
   margin: 5px 0;
+
+  .add {
+    background: #eee;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+    margin-right: 5px;
+  }
+
+  .text {
+    padding: 0 10px;
+    flex-grow: 1;
+    line-height: 30px;
+    background: #eee;
+    color: #2c3e50;
+    font-size: 16px;
+    border: none;
+  }
 }
 
 .error {
@@ -64,45 +85,24 @@
   display: flex;
   flex-direction: row;
   margin: 5px 0; 
-}
 
-.error > .text {
-  flex-grow: 1;
-  padding: 0 10px;
-  background: rgb(255, 200, 200);
-  color: rgb(255, 100, 100);
-  line-height: 30px;
-  font-size: 16px;
-}
+  .text {
+    flex-grow: 1;
+    padding: 0 10px;
+    background: rgb(255, 200, 200);
+    color: rgb(255, 100, 100);
+    line-height: 30px;
+    font-size: 16px;
+  }
 
-.error > .close {
-  background: rgb(255, 200, 200);
-  color: rgb(255, 100, 100);
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  font-size: 12px;
-  text-align: center;
-}
-
-.task > .add {
-  background: #eee;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  font-size: 12px;
-  text-align: center;
-  margin-right: 5px;
-}
-
-.task > .text {
-  padding: 0 10px;
-  flex-grow: 1;
-  line-height: 30px;
-  background: #eee;
-  color: #2c3e50;
-  font-size: 16px;
-  border: none;
+  .close {
+    background: rgb(255, 200, 200);
+    color: rgb(255, 100, 100);
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    text-align: center;
+  }
 }
