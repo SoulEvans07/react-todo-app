@@ -5,7 +5,7 @@ import types from './action_types'
 const initialState = {
   error: null,
   task_list: null,
-  selected_task: null
+  selected_id: null
 }
 
 function addTask (state, payload) {
@@ -36,7 +36,7 @@ function setError(state, payload) {
 }
 
 function selectTask(state, payload) {
-  return { ...state, selected_task: payload._id }
+  return { ...state, selected_id: payload._id }
 }
 
 function rootReducer(state, action) {

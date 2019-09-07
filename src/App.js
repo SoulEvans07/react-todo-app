@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.props.store.subscribe(() => this.forceUpdate())
-    
+
     this.props.store.dispatch(fetchTaskList())
   }
 
@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   addTaskByEnter = (event) => {
-    if(event.key === 'Enter') { 
+    if(event.key === 'Enter') {
       this.addTask()
     }
   }
@@ -41,9 +41,9 @@ class App extends Component {
 
   render() {
     const store = this.props.store;
-    const selectedId = store.getState().selected_task
-    let selectedTask = store.getState().task_list 
-      ? store.getState().task_list.find(el => el._id === selectedId) 
+    const selectedId = store.getState().selected_id
+    let selectedTask = store.getState().task_list
+      ? store.getState().task_list.find(el => el._id === selectedId)
       : null
 
     return (
@@ -60,12 +60,12 @@ class App extends Component {
                 </div>
             }
             { store.getState().task_list === null &&
-              [0,1,2,3,4].map((el) => 
+              [0,1,2,3,4].map((el) =>
                 <TaskItemLoad key={el} delay={-0.4*el} />
               )
             }
             { store.getState().task_list !== null &&
-              store.getState().task_list.map((task, index) => 
+              store.getState().task_list.map((task, index) =>
               <TaskItem task={task} index={index} key={task._id} store={store}/>)
             }
             <div className="newTask">
@@ -74,7 +74,7 @@ class App extends Component {
                 value={this.state.temp_task} onChange={this.updateTempTask} onKeyUp={this.addTaskByEnter} />
             </div>
           </div>
-          { !!store.getState().selected_task &&
+          { !!store.getState().selected_id &&
             <div className="selectedTask">
               <TaskDetails task={selectedTask} store={store}/>
             </div>

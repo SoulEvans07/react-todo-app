@@ -1,26 +1,31 @@
 import React, { Component } from 'react'
 import './TaskItem.scss'
 import TaskTag from './TaskTag'
-import { removeTask, updateTaskState, selectTask } from '../store/actions'
+import * as actions from '../store/actions'
 
 class TaskItem extends Component {
   changeTaskState = () => {
-    this.props.store.dispatch(updateTaskState({ task: this.props.task }))
+    this.props.store.dispatch(actions.updateTaskState({ task: this.props.task }))
   }
 
   removeTask = () => {
-    this.props.store.dispatch(removeTask({ _id: this.props.task._id }))
+    this.props.store.dispatch(actions.removeTask({ _id: this.props.task._id }))
   }
 
   selectTask = () => {
-    this.props.store.dispatch(selectTask({ _id: this.props.task._id }))
-  } 
+    this.props.store.dispatch(actions.selectTask({ _id: this.props.task._id }))
+  }
 
   render() {
+    const state = this.props.store.getState()
     const task = this.props.task
     const taskStyleClass = [ "taskItem" ]
+
     if(task.done)
       taskStyleClass.push("done")
+
+    if(task._id === state.selected_id)
+      taskStyleClass.push("selected")
 
     return (
       <div className={taskStyleClass.join(' ')}>
@@ -32,7 +37,7 @@ class TaskItem extends Component {
         </div>
         <div className="tagList">
           { task.tags.length > 0 &&
-            task.tags.map(tag => 
+            task.tags.map(tag =>
             <TaskTag key={tag._id} tag={tag}></TaskTag>
           )}
         </div>

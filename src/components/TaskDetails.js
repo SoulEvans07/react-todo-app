@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { updateTaskState } from '../store/actions'
+import * as actions from '../store/actions'
 import './TaskDetails.scss'
 
 class TaskDetails extends Component {
   cancel = () => {
-
+    this.props.store.dispatch(actions.selectTask({ _id: null }))
   }
 
   changeTaskState = () => {
-    this.props.store.dispatch(updateTaskState({ task: this.props.task }))
+    this.props.store.dispatch(actions.updateTaskState({ task: this.props.task }))
   }
 
   editDescription = () => {
@@ -30,7 +30,7 @@ class TaskDetails extends Component {
           <div className="text">{task.text}</div>
           <i className="cancel fa fa-times" title="Cancel" onClick={this.cancel}></i>
         </div>
-        <div className="description" contentEditable 
+        <div className="description" contentEditable
           onBlur={this.editDescription}>
           {task.description}
         </div>
