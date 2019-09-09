@@ -15,15 +15,39 @@ function addTask (state, payload) {
 }
 
 function updateTaskState (state, payload) {
-  const new_list = state.task_list.map(task => {
-    task.done = (task._id === payload._id ? !task.done : task.done)
+  const update = (payload) => (task) => {
+    if(task.done !== undefined) {
+      task.done = (task._id === payload._id ? !task.done : task.done)
+    }
+    if(task.subtasks && task.subtasks.length > 0) {
+      task.subtasks.map(update(payload))
+    }
     return task
-  })
+  }
+
+  const new_list = state.task_list.map(update(payload))
   return { ...state, task_list: new_list }
 }
 
 function removeTask (state, payload) {
-  const new_list = state.task_list.filter(task => task._id !== payload._id);
+  let new_list = null
+  const remove = (payload) => (task) => {
+    if(payload.task.parent === task._id) {
+      task.subtasks = task.subtasks.filter(t => t._id !== payload.task._id)
+    } else if(task.subtasks && task.subtasks.length > 0) {
+      task.subtasks.map(remove(payload))
+    }
+    return task
+  }
+
+  console.log(payload.task)
+  console.log(state.task_list)
+  if(payload.task.parent === null) {
+    new_list = state.task_list.filter(t => t._id !== payload.task._id)
+  } else {
+    new_list = state.task_list.map(remove(payload))
+  }
+  console.log(new_list)
   return { ...state, task_list: new_list }
 }
 
@@ -37,6 +61,21 @@ function setError(state, payload) {
 
 function selectTask(state, payload) {
   return { ...state, selected_id: payload._id }
+}
+
+function selectFolder(state, payload) {
+  const select = (payload) => (task) => {
+    if(task._id === payload._id) {
+      task.open = !task.open
+      task.subtasks = payload.subtasks
+    } else if(task.subtasks && task.subtasks.length > 0){
+      task.subtasks.map(select(payload))
+    }
+    return task
+  }
+
+  const new_list = state.task_list.map(select(payload))
+  return { ...state, task_list: new_list }
 }
 
 function rootReducer(state, action) {
@@ -53,6 +92,8 @@ function rootReducer(state, action) {
       return setError(state, action.payload)
     case types.SELECT_TASK:
       return selectTask(state, action.payload)
+    case types.SELECT_FOLDER:
+      return selectFolder(state, action.payload)
     default:
       return state
   }
