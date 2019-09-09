@@ -54,7 +54,8 @@
 
   &.selected > .text,
   &.selected > .checkbox,
-  &.selected > .remove {
+  &.selected > .remove,
+  &.selected > .tagList {
     background:$main-color;
     color: white;
   }
