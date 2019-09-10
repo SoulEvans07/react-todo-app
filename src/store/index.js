@@ -5,7 +5,8 @@ import types from './action_types'
 const initialState = {
   error: null,
   task_list: null,
-  selected_id: null
+  // selected_id: null
+  selected_task: null
 }
 
 function addTask (state, payload) {
@@ -40,14 +41,12 @@ function removeTask (state, payload) {
     return task
   }
 
-  console.log(payload.task)
-  console.log(state.task_list)
   if(payload.task.parent === null) {
     new_list = state.task_list.filter(t => t._id !== payload.task._id)
   } else {
     new_list = state.task_list.map(remove(payload))
   }
-  console.log(new_list)
+
   return { ...state, task_list: new_list }
 }
 
@@ -60,7 +59,9 @@ function setError(state, payload) {
 }
 
 function selectTask(state, payload) {
-  return { ...state, selected_id: payload._id }
+  // console.log({ ...state, selected_id: payload._id })
+  // return { ...state, selected_id: payload._id }
+  return { ...state, selected_task: payload.selected_task }
 }
 
 function selectFolder(state, payload) {

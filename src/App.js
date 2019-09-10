@@ -41,10 +41,11 @@ class App extends Component {
 
   render() {
     const store = this.props.store;
-    const selectedId = store.getState().selected_id
-    let selectedTask = store.getState().task_list
-      ? store.getState().task_list.find(el => el._id === selectedId)
-      : null
+    // const selectedId = store.getState().selected_id
+    // let selectedTask = store.getState().task_list
+    //   ? store.getState().task_list.find(el => el._id === selectedId)
+    //   : null
+    const selectedTask = store.getState().selected_task
 
     return (
       <div className="app">
@@ -74,7 +75,7 @@ class App extends Component {
                 value={this.state.temp_task} onChange={this.updateTempTask} onKeyUp={this.addTaskByEnter} />
             </div>
           </div>
-          { !!store.getState().selected_id &&
+          { !!store.getState().selected_task &&
             <div className="selectedTask">
               <TaskDetails task={selectedTask} store={store}/>
             </div>
