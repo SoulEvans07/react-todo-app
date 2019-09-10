@@ -42,9 +42,9 @@ class TaskItem extends Component {
           <div className="checkbox" onClick={this.changeTaskState}>
             { task.done ? icon : isFolder ? icon : null }
           </div>
-          <div className="text" title={task.text} contentEditable
+          <div className="title" title={task.title} contentEditable
             onClick={this.selectTask} onDoubleClick={this.openFolder}>
-            { task.text }
+            { task.title }
           </div>
           <div className="tagList">
             { !!(task.tags && task.tags.length > 0) &&

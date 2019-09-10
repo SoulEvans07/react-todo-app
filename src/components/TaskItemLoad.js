@@ -6,7 +6,7 @@ class TaskItemLoad extends Component {
     return (
       <div className="taskLoadItem">
         <div className="checkbox" />
-        <div className="text" style={{animationDelay: this.props.delay+'s'}}/>
+        <div className="title" style={{animationDelay: this.props.delay+'s'}}/>
         <i className="remove fa fa-time" />
       </div>
     )

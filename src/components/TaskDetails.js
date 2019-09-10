@@ -17,9 +17,9 @@ class TaskDetails extends Component {
 
   render() {
     const task = this.props.task
-    const taskStyleClass = [ "title" ]
+    const taskStyleClass = [ 'header' ]
     if(task.done)
-      taskStyleClass.push("done")
+      taskStyleClass.push('done')
 
     return (
       <div className="taskDetails">
@@ -27,7 +27,7 @@ class TaskDetails extends Component {
           <div className="checkbox" onClick={this.changeTaskState}>
             { task.done && <i className="fa fa-check" ></i> }
           </div>
-          <div className="text">{task.text}</div>
+          <div className="title">{task.title}</div>
           <i className="cancel fa fa-times" title="Cancel" onClick={this.cancel}></i>
         </div>
         <div className="description" contentEditable

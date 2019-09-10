@@ -24,7 +24,7 @@ class App extends Component {
 
   addTask = (event) => {
     if(this.state.temp_task){
-      this.props.store.dispatch(addTask({ text: this.state.temp_task }))
+      this.props.store.dispatch(addTask({ title: this.state.temp_task }))
       this.setState({ temp_task: "" })
     }
   }
@@ -71,7 +71,7 @@ class App extends Component {
             }
             <div className="newTask">
               <i className="add fa fa-plus" onClick={this.addTask} />
-              <input className="text" name="temp_task" type="text" autoComplete="off"
+              <input className="title" name="temp_task" type="text" autoComplete="off"
                 value={this.state.temp_task} onChange={this.updateTempTask} onKeyUp={this.addTaskByEnter} />
             </div>
           </div>

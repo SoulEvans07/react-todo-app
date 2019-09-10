@@ -35,7 +35,7 @@
       margin-left: 5px;
     }
 
-    .text {
+    .title {
       padding: 0 10px;
       max-width: 100%;
       flex-grow: 1;
@@ -50,7 +50,7 @@
       color: $main-color;
     }
 
-    &.selected > .text,
+    &.selected > .title,
     &.selected > .checkbox,
     &.selected > .remove,
     &.selected > .tagList {

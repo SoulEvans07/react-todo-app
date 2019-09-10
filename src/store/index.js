@@ -59,8 +59,6 @@ function setError(state, payload) {
 }
 
 function selectTask(state, payload) {
-  // console.log({ ...state, selected_id: payload._id })
-  // return { ...state, selected_id: payload._id }
   return { ...state, selected_task: payload.selected_task }
 }
 
