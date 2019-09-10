@@ -62,19 +62,19 @@ export function removeTask(payload) {
   }
 }
 
-export function updateTaskState(payload) {
+export function updateTask(payload) {
   return dispatch => {
     fetch(`http://localhost:5000/api/tasks/${payload.task._id}/update`, {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ done: !payload.task.done })
+      body: JSON.stringify(payload.task)
     })
     .then(res => res.json())
     .then(res => {
       if(res.error !== undefined)
         dispatch(setError({ error: res.error }))
       else
-        dispatch({ type: types.UPDATE_TASK_STATE, payload: { _id: res._id } })
+        dispatch({ type: types.UPDATE_TASK, payload })
     })
   }
 }

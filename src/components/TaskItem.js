@@ -5,7 +5,17 @@ import * as actions from '../store/actions'
 
 class TaskItem extends Component {
   changeTaskState = () => {
-    this.props.store.dispatch(actions.updateTaskState({ task: this.props.task }))
+    const task = { ...this.props.task }
+    task.done = !task.done
+    this.props.store.dispatch(actions.updateTask({ task }))
+  }
+
+  saveTitle = () => {
+    const task = { ...this.props.task }
+    if(task.title !== this.refs.title.innerText) {
+      task.title = this.refs.title.innerText
+      this.props.store.dispatch(actions.updateTask({ task }))
+    }
   }
 
   removeTask = () => {
@@ -42,8 +52,9 @@ class TaskItem extends Component {
           <div className="checkbox" onClick={this.changeTaskState}>
             { task.done ? icon : isFolder ? icon : null }
           </div>
-          <div className="title" title={task.title} contentEditable
-            onClick={this.selectTask} onDoubleClick={this.openFolder}>
+          <div className="title" title={task.title}
+            ref="title" contentEditable suppressContentEditableWarning
+            onClick={this.selectTask} onDoubleClick={this.openFolder} onBlur={this.saveTitle}>
             { task.title }
           </div>
           <div className="tagList">

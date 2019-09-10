@@ -8,7 +8,9 @@ class TaskDetails extends Component {
   }
 
   changeTaskState = () => {
-    this.props.store.dispatch(actions.updateTaskState({ task: this.props.task }))
+    const task = { ...this.props.task }
+    task.done = !task.done
+    this.props.store.dispatch(actions.updateTask({ task }))
   }
 
   editDescription = () => {

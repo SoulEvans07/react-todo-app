@@ -15,13 +15,13 @@ function addTask (state, payload) {
   return { ...state, task_list: new_list }
 }
 
-function updateTaskState (state, payload) {
+function updateTask (state, payload) {
   const update = (payload) => (task) => {
-    if(task.done !== undefined) {
-      task.done = (task._id === payload._id ? !task.done : task.done)
-    }
     if(task.subtasks && task.subtasks.length > 0) {
-      task.subtasks.map(update(payload))
+      task.subtasks = task.subtasks.map(update(payload))
+    }
+    if(task._id === payload.task._id) {
+      task = { ...task, ...payload.task }
     }
     return task
   }
@@ -83,8 +83,8 @@ function rootReducer(state, action) {
       return addTask(state, action.payload)
     case types.REMOVE_TASK:
       return removeTask(state, action.payload)
-    case types.UPDATE_TASK_STATE:
-      return updateTaskState(state, action.payload)
+    case types.UPDATE_TASK:
+      return updateTask(state, action.payload)
     case types.SET_TASK_LIST:
       return setTaskList(state, action.payload)
     case types.SET_ERROR:
