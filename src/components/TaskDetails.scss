@@ -38,6 +38,27 @@
       border: none;
     }
 
+    .remove {
+      background: #eee;
+      color: rgb(255, 100, 100);
+      cursor: pointer;
+      min-width: 30px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+      text-align: center;
+      margin-left: 5px;
+
+      .text {
+        margin: 0 5px 0 12px;
+        font-size: 14px;
+      }
+
+      .icon {
+        margin-right: 12px;
+      }
+    }
+
     .cancel {
       background: #eee;
       color: #2c3e50;

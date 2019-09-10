@@ -23,18 +23,6 @@
       margin-right: 5px;
     }
 
-    .remove {
-      background: #eee;
-      color: rgb(255, 100, 100);
-      cursor: pointer;
-      min-width: 30px;
-      height: 30px;
-      line-height: 30px;
-      font-size: 12px;
-      text-align: center;
-      margin-left: 5px;
-    }
-
     .title {
       padding: 0 10px;
       max-width: 100%;
@@ -52,7 +40,6 @@
 
     &.selected > .title,
     &.selected > .checkbox,
-    &.selected > .remove,
     &.selected > .tagList {
       background:$main-color;
       color: white;

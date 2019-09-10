@@ -18,10 +18,6 @@ class TaskItem extends Component {
     }
   }
 
-  removeTask = () => {
-    this.props.store.dispatch(actions.removeTask({ task: this.props.task }))
-  }
-
   selectTask = () => {
     const task = this.props.task
     this.props.store.dispatch(actions.selectTask({ selected_task: task }))
@@ -63,7 +59,6 @@ class TaskItem extends Component {
               <TaskTag key={tag._id} tag={tag}></TaskTag>
             )}
           </div>
-          <i className="remove fa fa-times" title='Delete' onClick={this.removeTask}/>
         </div>
         { isOpen &&
           <div className="subtaskList">
