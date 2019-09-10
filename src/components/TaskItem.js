@@ -34,7 +34,7 @@ class TaskItem extends Component {
 
     if(task.done) { taskContentStyleClass.push("done") }
     if(state.selected_task && task._id === state.selected_task._id) { taskContentStyleClass.push("selected") }
-    if(isFolder) { icon = <i className='far fa-folder'/> }
+    if(isFolder) { icon = <i className={(task.done ? 'fas' : 'far') + ' fa-folder'}/> }
 
     return (
       <div className="taskItem">
@@ -42,7 +42,8 @@ class TaskItem extends Component {
           <div className="checkbox" onClick={this.changeTaskState}>
             { task.done ? icon : isFolder ? icon : null }
           </div>
-          <div className="text" title={task.text} onClick={this.selectTask} onDoubleClick={this.openFolder}>
+          <div className="text" title={task.text} contentEditable
+            onClick={this.selectTask} onDoubleClick={this.openFolder}>
             { task.text }
           </div>
           <div className="tagList">
