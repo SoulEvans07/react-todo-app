@@ -5,13 +5,26 @@ import types from './action_types'
 const initialState = {
   error: null,
   task_list: null,
-  // selected_id: null
   selected_task: null
 }
 
 function addTask (state, payload) {
-  const new_list = [...state.task_list]
-  new_list.push(payload)
+  let new_list = null
+  const add = (payload) => (task) => {
+    if(payload.task.parent === task._id || payload.task.parent._id === task._id) {
+      task.subtasks = [ ...task.subtasks, payload.task]
+    } else if(task.subtasks && task.subtasks.length > 0) {
+      task.subtasks = task.subtasks.map(add(payload))
+    }
+    return task
+  }
+
+  if(payload.task.parent === null) {
+    new_list = [...state.task_list, payload.task]
+  } else {
+    new_list = state.task_list.map(add(payload))
+  }
+
   return { ...state, task_list: new_list }
 }
 
@@ -33,10 +46,10 @@ function updateTask (state, payload) {
 function removeTask (state, payload) {
   let new_list = null
   const remove = (payload) => (task) => {
-    if(payload.task.parent === task._id) {
+    if(payload.task.parent === task._id || payload.task.parent._id === task._id) {
       task.subtasks = task.subtasks.filter(t => t._id !== payload.task._id)
     } else if(task.subtasks && task.subtasks.length > 0) {
-      task.subtasks.map(remove(payload))
+      task.subtasks = task.subtasks.map(remove(payload))
     }
     return task
   }
@@ -65,10 +78,10 @@ function selectTask(state, payload) {
 function selectFolder(state, payload) {
   const select = (payload) => (task) => {
     if(task._id === payload._id) {
-      task.open = !task.open
+      task.open = payload.open
       task.subtasks = payload.subtasks
     } else if(task.subtasks && task.subtasks.length > 0){
-      task.subtasks.map(select(payload))
+      task.subtasks = task.subtasks.map(select(payload))
     }
     return task
   }

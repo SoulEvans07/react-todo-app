@@ -24,7 +24,7 @@ class App extends Component {
 
   addTask = (event) => {
     if(this.state.temp_task){
-      this.props.store.dispatch(addTask({ title: this.state.temp_task }))
+      this.props.store.dispatch(addTask({ task: { title: this.state.temp_task } }))
       this.setState({ temp_task: "" })
     }
   }
@@ -41,10 +41,6 @@ class App extends Component {
 
   render() {
     const store = this.props.store;
-    // const selectedId = store.getState().selected_id
-    // let selectedTask = store.getState().task_list
-    //   ? store.getState().task_list.find(el => el._id === selectedId)
-    //   : null
     const selectedTask = store.getState().selected_task
 
     return (

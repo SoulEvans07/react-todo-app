@@ -6,7 +6,7 @@ export function setTaskList(payload) {
 
 export function fetchTaskList() {
   return dispatch => {
-    fetch('http://localhost:5000/api/tasks', {
+    return fetch('http://localhost:5000/api/tasks', {
       method: 'GET',
     }).then(res => res.json())
     .then(res => {
@@ -21,7 +21,7 @@ export function selectTask(payload) {
 
 export function selectFolder(payload) {
   return dispatch => {
-    fetch(`http://localhost:5000/api/tasks/${payload._id}`, {
+    return fetch(`http://localhost:5000/api/tasks/${payload._id}`, {
       method: 'GET',
     }).then(res => res.json())
     .then(res => {
@@ -31,26 +31,49 @@ export function selectFolder(payload) {
   }
 }
 
-export function addTask(payload) {
-  return dispatch => {
-    fetch('http://localhost:5000/api/tasks/new', {
+export function addTaskUnder(payload) {
+  return async dispatch => {
+    if(!payload.parent.open && payload.parent.subtasks && payload.parent.subtasks.length > 0) {
+      payload.parent.open = true
+      await dispatch(selectFolder(payload.parent))
+    }
+    return fetch(`http://localhost:5000/api/tasks/${payload.parent._id}/new`, {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload.new_task)
+    })
+    .then(res => res.json())
+    .then(async (res) => {
+      if(res.error !== undefined) {
+        dispatch(setError({ error: res.error }))
+      } else {
+        await dispatch({ type: types.ADD_TASK, payload: { task: res } })
+        return res
+      }
+    })
+  }
+}
+
+export function addTask(payload) {
+  return dispatch => {
+    return fetch('http://localhost:5000/api/tasks/new', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify(payload.task)
     })
     .then(res => res.json())
     .then(res => {
       if(res.error !== undefined)
         dispatch(setError({ error: res.error }))
       else
-        dispatch({ type: types.ADD_TASK, payload: res })
+        dispatch({ type: types.ADD_TASK, payload: { task: res } })
     })
   }
 }
 
 export function removeTask(payload) {
   return dispatch => {
-    fetch('http://localhost:5000/api/tasks/' + payload.task._id, {
+    return fetch('http://localhost:5000/api/tasks/' + payload.task._id, {
       method: 'DELETE'
     })
     .then(res => {
@@ -64,7 +87,7 @@ export function removeTask(payload) {
 
 export function updateTask(payload) {
   return dispatch => {
-    fetch(`http://localhost:5000/api/tasks/${payload.task._id}/update`, {
+    return fetch(`http://localhost:5000/api/tasks/${payload.task._id}/update`, {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
       body: JSON.stringify(payload.task)

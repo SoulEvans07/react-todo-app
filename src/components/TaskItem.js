@@ -1,9 +1,26 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import './TaskItem.scss'
 import TaskTag from './TaskTag'
 import * as actions from '../store/actions'
 
 class TaskItem extends Component {
+  componentDidMount() {
+    const node = ReactDOM.findDOMNode(this.refs.title)
+    if(node) {
+      node.addEventListener('keypress', this.handleKeyPress)
+      node.addEventListener('keydown', this.handleKeyDown)
+    }
+  }
+
+  componentWillUnmount() {
+    const node = ReactDOM.findDOMNode(this.refs.title)
+    if(node) {
+      node.removeEventListener('keypress', this.handleKeyPress)
+      node.removeEventListener('keydown', this.handleKeyDown)
+    }
+  }
+
   changeTaskState = () => {
     const task = { ...this.props.task }
     task.done = !task.done
@@ -26,7 +43,63 @@ class TaskItem extends Component {
   openFolder = () => {
     const task = this.props.task
     if(task.subtasks && task.subtasks.length > 0) {
-      this.props.store.dispatch(actions.selectFolder({ _id: task._id }))
+      task.open = !task.open
+      this.props.store.dispatch(actions.selectFolder(task))
+    }
+  }
+
+  focusTask = (task) => {
+    setTimeout(() => {
+      const taskTitle = document.querySelector(`#task_${task._id} .title`)
+      if(taskTitle) {
+        taskTitle.focus()
+        this.props.store.dispatch(actions.selectTask({ selected_task: task }))
+      }
+    }, 0)
+  }
+
+  handleKeyDown = async (event) => {
+    const store = this.props.store
+    let task = this.props.task
+
+    const handleBackspace = async () => {
+      if(event.srcElement.innerText === '') {
+        event.stopPropagation()
+        event.preventDefault()
+
+        if(task.parent) this.focusTask(task.parent)
+        if(store.getState().selected_task._id === task._id)
+          store.dispatch(actions.selectTask({ selected_task: null }))
+        store.dispatch(actions.removeTask({ task }))
+      }
+    }
+
+    switch (event.key) {
+      case 'Backspace': await handleBackspace()
+        break
+      default:
+    }
+  }
+
+  handleKeyPress = async (event) => {
+    const store = this.props.store
+    let task = this.props.task
+
+    const handleEnter = async () => {
+      event.stopPropagation()
+      event.preventDefault()
+
+      const newTask = { title: "" }
+      event.srcElement.blur()
+      task = await store.dispatch(actions.addTaskUnder({ new_task: newTask, parent: task }))
+
+      this.focusTask(task)
+    }
+
+    switch (event.key) {
+      case 'Enter': await handleEnter()
+        break
+      default:
     }
   }
 
@@ -44,13 +117,18 @@ class TaskItem extends Component {
 
     return (
       <div className="taskItem">
-        <div className={taskContentStyleClass.join(' ')}>
+        <div className={taskContentStyleClass.join(' ')} id={'task_'+task._id}>
           <div className="checkbox" onClick={this.changeTaskState}>
             { task.done ? icon : isFolder ? icon : null }
           </div>
-          <div className="title" title={task.title}
-            ref="title" contentEditable suppressContentEditableWarning
-            onClick={this.selectTask} onDoubleClick={this.openFolder} onBlur={this.saveTitle}>
+          <div className="title"
+            title={task.title}
+            ref="title"
+            contentEditable
+            suppressContentEditableWarning
+            onClick={this.selectTask}
+            onDoubleClick={this.openFolder}
+            onBlur={this.saveTitle}>
             { task.title }
           </div>
           <div className="tagList">
