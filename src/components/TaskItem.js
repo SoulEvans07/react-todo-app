@@ -74,10 +74,30 @@ class TaskItem extends Component {
       }
     }
 
+    const handleArrow = async () => {
+      event.stopPropagation()
+      event.preventDefault()
+
+      let index = task.parent.subtasks.map(subtask => typeof subtask === 'string' ? subtask : subtask._id).indexOf(task._id)
+      if(index !== 0 && index !== task.subtasks.length-1) {
+        // select index +-1
+      } else if(index === 0) {
+        // select parent
+      } else {
+        // get index of parent in parent.parent
+        //
+      }
+    }
+
     switch (event.key) {
       case 'Backspace': await handleBackspace()
         break
+      case 'ArrowUp':
+        break
+      case 'ArrowDown':
+        break
       default:
+        console.log(event.key)
     }
   }
 
